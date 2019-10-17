@@ -20,7 +20,7 @@ npm install
 
 
 
-![Logs Screenshot](/images/logging-screenshot.png)
+<img src="https://github.com/JaimeDordio/rickandmorty-graphql/blob/v1.0.1/images/logging-screenshot.png?raw=true" alt="Logs Screenshot" style="zoom:80%;" />
 
 ## 📃 Changelog
 
