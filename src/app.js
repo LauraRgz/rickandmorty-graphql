@@ -51,15 +51,24 @@ const runApp = data => {
                                  .filter(elem => elem.location.name.includes(args.planet || elem.location.name))
                                  .slice(init, end)
                                  .map(obj => {
-                                      return {
-                                        id: obj.id,
-                                        name: obj.name,
-                                        status: obj.status,
-                                        planet: obj.location.name
-                                      }
-                                    })
+                                    return {
+                                      id: obj.id,
+                                      name: obj.name,
+                                      status: obj.status,
+                                      planet: obj.location.name
+                                    }
+                                 })
 
         return filteredData;
+      },
+
+      planets: () => {
+        const planetList = [] 
+        data.forEach(elem => {
+          planetList.push(elem.location.name);
+        });
+
+        return [... new Set(planetList)];
       }
 
     }
