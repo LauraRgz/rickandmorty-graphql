@@ -14,7 +14,8 @@ const runApp = data => {
   const typeDefs = `
     type Query {
       character(id: Int!): Character!
-      characters(page: Int, pageSize: Int): [Character!]!
+      characters(page: Int, pageSize: Int, name: String, status: String, planet: String): [Character!]!
+      planets: [String!]!
     }
 
     type Character {
@@ -41,23 +42,24 @@ const runApp = data => {
 
         const page = args.page || 1;
         const pageSize = args.pageSize || 20;
-
         
         const init = (page-1)*pageSize;
         const end = init + pageSize;
 
-        const result = data.slice(init, end);
+        const filteredData = data.filter(elem => elem.name.includes(args.name || elem.name))
+                                 .filter(elem => elem.status.includes(args.status || elem.status))
+                                 .filter(elem => elem.location.name.includes(args.planet || elem.location.name))
+                                 .slice(init, end)
+                                 .map(obj => {
+                                      return {
+                                        id: obj.id,
+                                        name: obj.name,
+                                        status: obj.status,
+                                        planet: obj.location.name
+                                      }
+                                    })
 
-        const devol = result.map(obj => {
-          return {
-            id: obj.id,
-            name: obj.name,
-            status: obj.status,
-            planet: obj.location.name
-          }
-        })
-
-        return devol;
+        return filteredData;
       }
 
     }
