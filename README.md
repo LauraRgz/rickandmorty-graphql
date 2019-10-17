@@ -20,6 +20,8 @@ npm install
 
 
 
+![Logs Screenshot](/images/logging-screenshot.png)
+
 ## 📃 Changelog
 
 Every release is documented on the [GitHub Releases page](https://github.com/JaimeDordio/rickymorty/releases).
