@@ -1,3 +1,4 @@
+import chalk from 'chalk'
 import { fetchData } from './fetchdata';
 import { GraphQLServer } from 'graphql-yoga'
 
@@ -24,12 +25,20 @@ const runApp = data => {
       status: String!
       planet: String!
     }
-    `
+  `
+
   const resolvers = {
 
     Query: {
       character: (parent, args, ctx, info) => {
+
         const result = data.find(obj => obj.id === args.id)
+
+        console.log(chalk.green(`---------------------------------------`))
+        console.log(chalk.green(`REQUEST MADE TO 'character'`))
+        console.log(`ID: ${args.id}`)
+        console.log(chalk.green(`---------------------------------------`))
+
         return {
           id: result.id,
           name: result.name,
@@ -59,14 +68,28 @@ const runApp = data => {
                                     }
                                  })
 
+        console.log(chalk.yellow(`----------------------------------------`))
+        console.log(chalk.yellow(`REQUEST MADE TO 'characters'`))
+        console.log(`Page: ${page}`)
+        console.log(`Page Size: ${pageSize}`)
+        console.log(`Name: ${args.name}`)
+        console.log(`Status: ${args.status}`)
+        console.log(`Planet: ${args.planet}`)
+        console.log(chalk.yellow(`----------------------------------------`))
+                                                
         return filteredData;
       },
 
       planets: () => {
+
         const planetList = [] 
         data.forEach(elem => {
           planetList.push(elem.location.name);
         });
+
+        console.log(chalk.blue(`----------------------------------------`))
+        console.log(chalk.blue(`REQUEST MADE TO 'planets'`))
+        console.log(chalk.blue(`----------------------------------------`))
 
         return [... new Set(planetList)];
       }
@@ -75,6 +98,11 @@ const runApp = data => {
   }
 
   const server = new GraphQLServer({typeDefs, resolvers})
+
+  console.log(chalk.bgRed("\n----------------------------------------------------------"))
+  console.log(chalk.bgRed("-------------------- SERVER LISTENING --------------------"))
+  console.log(chalk.bgRed("----------------------------------------------------------\n"))
+
   server.start()
 };
 
